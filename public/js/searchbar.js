@@ -1,6 +1,7 @@
 $(document).ready(function() {
   $('select').material_select();
   $('.chips').material_chip();
+  $('.modal').modal();
 
   $('#recommandButton').on('click', function(event){
     var target = $(event.target);
