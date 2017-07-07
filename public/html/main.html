@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bookmark Storage</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  </head>
+  <body>
+    <nav class="nav-extended indigo darken-1">
+      <div class="nav-wrapper indigo darken-3">
+        <a href="#" class="brand-logo">Logo</a>
+        <ul id="nav-mobile" class="right">
+          <li><a href="#">Sign in</a></li>
+          <li><a href="#">Sign up</a></li>
+        </ul>
+      </div>
+      <div class="nav-content indigo darken-1">
+        <div class="row" align="middle">
+          <form class="col s12">
+            <div id="keyword-wrapper" class="input-field col s4">
+              <input id="search" type="search" required>
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+            <div class="input-field col s2">
+              <select>
+                <option value="1" selected>최신순</option>
+                <option value="2">제목순</option>
+                <option value="3">추천많은순</option>
+              </select>
+            </div>
+            <div class="chips chips-placeholder col s3"></div>
+            <a class="waves-effect waves-light btn-large"><i class="material-icons left">search</i>Search</a>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="card col s12">
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4">
+              Card Title
+              <span class="right"><i class="material-icons grey-text lighten-2" id="recommandButton">thumb_up</i> <span id="recommandCount">0</span></span>
+            </span>
+            <p><a href="#">This is a link</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery-2.1.1.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/materialize.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/searchbar.js" charset="utf-8"></script>
+  </body>
+</html>
