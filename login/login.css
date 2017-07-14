@@ -1,0 +1,54 @@
+.login{
+    border-left: 1px;
+    border-right: 1px;
+    border-top: 1px;
+    border-bottom: 1px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px gray;
+    margin-top: 15px; 
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+#text{
+    text-align: center;
+}
+
+.section{
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 10px;
+    margin-bottom: 150px;
+}
+
+#login_button{
+    float: right;
+    text-align: center;
+}
+
+.title{
+    font-size: 30px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px;
+    border-bottom: 1px;
+    border-left: 1px;
+    border-right: 1px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #7073E8;
+    border-color: black;
+    color: white;
+}
+
+.login_page{
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+#btn_register{
+    float: left;
+}
