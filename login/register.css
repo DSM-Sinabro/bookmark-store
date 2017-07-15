@@ -4,7 +4,7 @@
     border-left: 1px solid black;
     border-right: 1px solid black;
     border-radius: 10px;
-    margin-top: 30px;
+    margin-top: 5%;
 }
 
 .section{
@@ -23,7 +23,7 @@ body{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background-color: #7073E8;
-    font-size: 30px; 
+    font-size: 2rem; 
     padding-top: 1%;
     padding-bottom: 1%;
     color: white;   
