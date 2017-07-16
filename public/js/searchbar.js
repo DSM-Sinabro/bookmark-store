@@ -1,6 +1,10 @@
 $(document).ready(function() {
   $('select').material_select();
-  $('.chips').material_chip();
+  $('#searchtags').material_chip();
+  $("#bookmark-tags").material_chip({
+      secondaryPlaceholder: '엔터로 태그추가',
+      placeholder: '태그 추가',
+  });
   $('.modal').modal();
 
   $('#recommandButton').on('click', function(event){

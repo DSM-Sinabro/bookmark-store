@@ -59,17 +59,36 @@
 
     <div id="bookmarkmodal" class="modal">
       <div class="modal-content">
-        <h4>Modal Header</h4>
-        <p>A bunch of text</p>
+        <h4>북마크 추가</h4>
+        <div class="row card">
+            <div class="card-content">
+                <div id="bookmark-title" class="card-title activator grey-text text-darken-4">
+                    타이틀 영역
+                </div>
+
+                <div class="col s12">
+                    <div class="col s1">링크</div>
+                    <div class="col s11">
+                        <input type="text" name="" id="bookmark-link" placeholder="원하는 링크를 입력해주세요">
+                    </div>
+                </div>
+
+                <div class="col s12">
+                    <div class="col s1">태그</div>
+                    <div id="bookmark-tags" class="chips chips-placeholder col s11"></div>
+                </div>
+            </div>
+        </div>
       </div>
       <div class="modal-footer">
         <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat">취소</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">확인</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="bookmark-add">확인</a>
       </div>
     </div>
 
     <script type="text/javascript" src="../js/jquery-2.1.1.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/materialize.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="../js/searchbar.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/modal.js" charset="utf-8"></script>
   </body>
 </html>
