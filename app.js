@@ -8,9 +8,6 @@ var session= require('express-session');
 
 var bodyParser = require('body-parser');
 
-// var index = require('./routes/index');
-// var users = require('./routes/users');
-// var bookmarks = require('./routes/bookmarks');
 
 var app = express();
 
@@ -18,8 +15,6 @@ var app = express();
 app.set('views', __dirname+'/views');
 app.set('view engine', 'ejs');
 app.engine('html',require('ejs').renderFile);
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(session({
   secret : 'sdfjkfjsdlkasfds',
   resave : false,
@@ -31,9 +26,30 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// var data= require('./data/data.js');
+
+var mysql= require('mysql');
+
+var connection=mysql.createConnection({
+  host: 'localhost',
+  password: '',
+  user: 'root',
+  port: 3306,
+  database: 'bookmark'
+});
+connection.connect(function(err){
+  if(err){
+    throw err;
+    console.log(err);
+  }
+});
+
+var bookmarks=require('./routes/bookmarks.js');
+
+
 // app.use('/', index);
 // app.use('/users', users);
-// app.use('/bookmarks', bookmarks);
+app.use('/', bookmarks);
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
@@ -53,11 +69,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 //   res.render('error');
 // });
 
-app.get('/index', function(req, res){
-  res.render('index',{});
-})
+// app.get('/bookmark',function(req, res){
+//   res.render('bookmark',{});
+// } 
+
 
 var server= app.listen(3000, function(req, res){
   console.log("server running at 3000port");
-
+  // data();
 })
