@@ -15,7 +15,6 @@ connection.connect();
 
 const LIMIT = 20;
 
-// get
 router.get('/bookmarks', function (req, res, next) {
   var sort = req.query.sort;
   var query = req.query.query;
@@ -50,7 +49,6 @@ router.get('/bookmarks', function (req, res, next) {
   conn.query(sql, [regexQuery, regexQuery, regexQuery, regexQuery, LIMIT], getQueryCallback);
 });
 
-// post
 router.post('/bookmarks', function (req, res) {
   var nowDate = new Date().toFormat('YYYY-MM-DD HH24:MI:SS')
   var tags = req.body.tags;
@@ -94,16 +92,15 @@ router.post('/bookmarks', function (req, res) {
   });
 });
 
-// delete
 router.delete('/bookmarks/:bookmarkId', function (req, res, next) {
   var bookmarkId = req.params.bookmarkId;
   var userId = req.session.id;
 
   var sql = 'DELETE FROM bookmark WHERE id=? AND userId=?;';
-  conn.query(sql, [bookmarkId, userId], function (err, rows) {
+  conn.query(sql, [bookmarkId, userId], function (err, results, fields) {
     if (err) throw err;
 
-    if (rows.length >= 1) {
+    if (results.length >= 1) {
       res.status(200);
     } else {
       res.status(400);
@@ -111,13 +108,13 @@ router.delete('/bookmarks/:bookmarkId', function (req, res, next) {
   });
 });
 
-function getQueryCallback(err, rows, fields) {
+function getQueryCallback(err, results, fields) {
   if (err) throw err;
 
-  if (rows) {
+  if (results) {
     var resArray = new Array();
 
-    rows.forEach(function (currentValue, index, arr) {
+    results.forEach(function (currentValue, index, arr) {
       var resObject = new Object();
       resObject.url = currentValue.url;
       resObject.title = currentValue.title;
