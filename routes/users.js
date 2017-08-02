@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var express = require('express');
 var router = express.Router();
 
@@ -41,9 +40,7 @@ router.post('/login', function(req, res, next) {
 
         if (rows.length >= 1) {
           console.log(user.id + ' is logged in.');
-          req.session.user= {
-            id : user.id
-          };
+          req.session.id = user.id;
           res.status(200);
         } else {
           console.log(user.id + 'is failed to login.');
@@ -52,92 +49,44 @@ router.post('/login', function(req, res, next) {
       });
     }    
 });
-router.get('/logout',function(req,res){
+router.delete('/logout',function(req,res){
   
   if(req.session.id){
     console.log('logout user:'+req.session.id);
     req.session.destroy(function(err){
       if(err) throw err;
       console.log('logout');
+      res.status(200);
     });
   }
 
 });
 
-router.post('/user/register',function(req,res){
+router.post('/register',function(req,res){
   var paramid= req.body.id;
   var parampassword= req.body.password;
-  connection.query('SELECT id FROM user',function(err,result){
+  connection.query('SELECT id FROM user',function(err,results){
     if(err) throw err;
     if(!result){
       console.log('이미 있는 아이디');
-      //error
+      res.status(409);
+      return;
     }
     var userInput= {
       id : paramid,
       password : parampassword
     }
-    connection.query('insert into user set ?',userInput,function(err, result){
+    connection.query('insert into user set ?',userInput,function(err, results){
       if(err) throw err;
       console.log('user insert');
+
+      if (results.length >= 1) {
+        res.status(201);
+      } else {
+        res.status(400);
+      }
     })
   })
 });
 
 module.exports = router;
-=======
-var express = require('express');
-var router = express.Router();
-
-var mysql = require('mysql');
-var conn = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
-  database: 'bookmark_store'
-});
-conn.connect();
-
-router.post('/login', function (req, res, next) {
-  var user = req.body;
-
-  var sql = 'SELECT id FROM user WHERE id=? AND password=?;';
-  conn.query(sql, [user.id, user.password], function (err, results, fields) {
-    if (err) throw err;
-
-    if (results.length >= 1) {
-      console.log(user.id + ' is logged in.');
-      req.session.id = user.id;
-      res.status(200);
-    } else {
-      console.log(user.id + 'is failed to login.');
-      res.status(401);
-    }
-  });
-});
-
-router.delete('/logout', function (req, res, next) {
-  req.session.destroy(function (err) {
-    if (err) throw err;
-
-    res.status(200);
-  });
-});
-
-router.post('/register', function (req, res, next) {
-  var user = req.body;
-
-  var sql = 'INSERT INTO user(id, password) VALUES(?, ?);';
-  conn.query(sql, [user.id, user.password], function (err, results, fields) {
-    if (err) throw err;
-
-    if (results.length >= 1) {
-      res.status(201);
-    } else {
-      res.status(400);
-    }
-  });
-});
-
-module.exports = router;
->>>>>>> 17881a6f2f37b11f68fec39590c713a250d24fc5
