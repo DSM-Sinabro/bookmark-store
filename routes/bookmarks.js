@@ -4,16 +4,17 @@ var router = express.Router();
 
 require('date-utils');
 
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'bookmark'
-});
-connection.connect();
+var connection= require('./mysql.js');
 
-const LIMIT = 20;
+// var mysql = require('mysql');
+// var connection = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'bookmark'
+// });
+// connection.connect();
+
 
 router.get('/bookmarks', function (req, res, next) {
     var sort = req.query.sort;
@@ -60,11 +61,10 @@ router.get('/bookmarks', function (req, res, next) {
     });
 });
 
-router.post('/bookmarks',function(req, res){
+router.route('/bookmarks').post((req, res)=>{
   var nowDate= new Date().toFormat('YYYY-MM-DD HH24:MI:SS')
   var tags= req.body.tags;
   var testuserid="testid01";
-  console.log(tags[0]);
   var bookmarkInput = {
     url : req.body.url,
     title : req.body.title,
@@ -76,31 +76,42 @@ router.post('/bookmarks',function(req, res){
     if(err){
       throw err;
       console.log(err);
+      res.status(500);
     }
     console.log('bookmark insert');
-    connection.query('SELECT LAST_INSERT_ID()',function(err, result){
-      if(err){
-        throw err;
-        console.log(err);
-      }
-      var uid=Number(result[0]['LAST_INSERT_ID()']);
-      //tags insert
-      for(var i=0; i<tags.length;i++){
-        var tagInput={
-          bookmarkId : uid,
-          content : tags[i],
-          userid : testuserid
-        }
-        connection.query('insert into tag set ?',tagInput,function(err, results){
-          if(err){
-            throw err;
-            console.log(err);
-          }
-          console.log('tag insert');
+    if(tags){
+        connection.query('SELECT LAST_INSERT_ID()',function(err, result){
+            if(err){
+                throw err;
+                console.log(err);
+                
+                res.status(500);
+            }
+            var uid=Number(result[0]['LAST_INSERT_ID()']);
+            //tags insert
+            for(var i=0; i<tags.length;i++){
+                var tagInput={
+                    bookmarkId : uid,
+                    content : tags[i],
+                    userid : testuserid
+                }
+                connection.query('insert into tag set ?',tagInput,function(err, results){
+                if(err){
+                    throw err;
+                    console.log(err);
+                    res.status(500);
+                }
+                console.log('tag insert');
+                res.status(201);
+                });
+            }
         });
-      }
-    });
+    } else{
+        res.status(201);
+    }
   });
-});
+}).delete((req,res)=>{
+    
+})
 
 module.exports = router;
