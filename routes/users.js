@@ -6,26 +6,26 @@ var mysqlStore = require('mysql-session-store')(session);
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
-  database: 'bookmark_store'
+  'host': 'localhost',
+  'user': 'root',
+  'password': '1234',
+  'database': 'bookmark_store'
 });
 connection.connect();
 
 var options = {
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: '',
-  database: 'bookmark_store'
+  'host': 'localhost',
+  'port': 3306,
+  'user': 'root',
+  'password': '',
+  'database': 'bookmark_store'
 };
 
 app.use(session({
-  store: new RedisStore(sessionoptions),
-  secret: 'sdfjkfjsdlkasfds',
-  resave: false,
-  saveUninitialized: true
+  'store': new RedisStore(sessionoptions),
+  'secret': 'sdfjkfjsdlkasfds',
+  'resave': false,
+  'saveUninitialized': true
 }));
 
 router.post('users/login', function (req, res, next) {
@@ -59,7 +59,6 @@ router.delete('users/logout', function (req, res) {
       res.status(200);
     });
   }
-
 });
 
 router.post('users/register', function (req, res) {

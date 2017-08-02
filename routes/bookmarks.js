@@ -41,15 +41,19 @@ router.get('/bookmarks', function (req, res, next) {
 });
 
 router.route('/bookmarks').post((req, res) => {
+  var url = req.body.url;
+  var title = req.body.title;
+  var userId = req.session.id;
   var nowDate = new Date().toFormat('YYYY-MM-DD HH24:MI:SS')
   var tags = req.body.tags;
-  var testuserid = "testid01";
+  // var testuserId = "testid01";
   var bookmarkInput = {
-    url: req.body.url,
-    title: req.body.title,
-    userid: testuserid,
-    rec: 0,
-    date: nowDate
+    'url': url,
+    'title': title,
+    // 'userId': testuserId,
+    'userId': userId,
+    'rec': 0,
+    'date': nowDate
   };
   connection.query('insert into bookmark set ?', bookmarkInput, function (err, results) {
     if (err) {
@@ -70,9 +74,9 @@ router.route('/bookmarks').post((req, res) => {
         //tags insert
         for (var i = 0; i < tags.length; i++) {
           var tagInput = {
-            bookmarkId: uid,
-            content: tags[i],
-            userid: testuserid
+            'bookmarkId': uid,
+            'content': tags[i],
+            'userId': userId
           }
           connection.query('insert into tag set ?', tagInput, function (err, results) {
             if (err) {
