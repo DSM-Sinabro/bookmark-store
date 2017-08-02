@@ -19,6 +19,7 @@ router.post('/login', function(req, res, next) {
 
       if (rows.length >= 1) {
         console.log(user.id + ' is logged in.');
+        req.session.id = user.id;
         res.status(200);
       } else {
         console.log(user.id + 'is failed to login.');
