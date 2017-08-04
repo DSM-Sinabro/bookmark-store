@@ -24,9 +24,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 var bookmarks= require('./routes/bookmarks.js');
 var user= require('./routes/users.js');
-
-app.use('/', bookmarks);
-
+var tag= require('./routes/tag.js');
+app.use('', bookmarks);
+app.use('', user);
+app.use('',tag);
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
 //   var err = new Error('Not Found');

@@ -1,10 +1,14 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2d36168e8f0b0f08c9bde60808a7d755724f953d
 var express = require('express');
 var router = express.Router();
 
-var session= require('express-session');
-var mysqlStore= require('mysql-session-store')(session);
+var session = require('express-session');
+var mysqlStore = require('mysql-session-store')(session);
 
+<<<<<<< HEAD
 // var mysql = require('mysql');
 // var connection = mysql.createConnection({
 //     host: 'localhost',
@@ -22,70 +26,94 @@ var mysqlStore= require('mysql-session-store')(session);
 //   database: 'bookmark_store'
 // };
 var connection= require('./mysql.js');
+=======
+// var mysql = require('mysql');
+// var connection = mysql.createConnection({
+//   'host': 'localhost',
+//   'user': 'root',
+//   'password': '1234',
+//   'database': 'bookmark_store'
+// });
+// connection.connect();
+
+// var options = {
+//   'host': 'localhost',
+//   'port': 3306,
+//   'user': 'root',
+//   'password': '',
+//   'database': 'bookmark_store'
+// };
+>>>>>>> 2d36168e8f0b0f08c9bde60808a7d755724f953d
 
 app.use(session({
-  store: new RedisStore(sessionoptions),
-  secret : 'sdfjkfjsdlkasfds',
-  resave : false,
-  saveUninitialized : true
+  'store': new RedisStore(sessionoptions),
+  'secret': 'sdfjkfjsdlkasfds',
+  'resave': false,
+  'saveUninitialized': true
 }));
 
-router.post('/login', function(req, res, next) {
-    var user = req.body;
+router.post('users/login', function (req, res, next) {
+  var user = req.body;
 
-    if(req.session.user){
+  if (req.session.user) {
 
-    }else{
-      var sql = 'SELECT id FROM user WHERE id=? AND password=?;';
-      connection.query(sql, [user.id, user.password], function(err, rows, fields) {
-        if (err) throw err;
+  } else {
+    var sql = 'SELECT id FROM user WHERE id=? AND password=?;';
+    connection.query(sql, [user.id, user.password], function (err, rows, fields) {
+      if (err) throw err;
 
-        if (rows.length >= 1) {
-          console.log(user.id + ' is logged in.');
-          req.session.user= {
-            id : user.id
-          };
-          res.status(200);
-        } else {
-          console.log(user.id + 'is failed to login.');
-          res.status(401);
-        }
-      });
-    }    
-});
-router.get('/logout',function(req,res){
-  
-  if(req.session.id){
-    console.log('logout user:'+req.session.id);
-    req.session.destroy(function(err){
-      if(err) throw err;
-      console.log('logout');
+      if (rows.length >= 1) {
+        console.log(user.id + ' is logged in.');
+        req.session.id = user.id;
+        res.status(200);
+      } else {
+        console.log(user.id + 'is failed to login.');
+        res.status(401);
+      }
     });
   }
+});
+router.delete('users/logout', function (req, res) {
 
+  if (req.session.id) {
+    console.log('logout user:' + req.session.id);
+    req.session.destroy(function (err) {
+      if (err) throw err;
+      console.log('logout');
+      res.status(200);
+    });
+  }
 });
 
-router.post('/user/register',function(req,res){
-  var paramid= req.body.id;
-  var parampassword= req.body.password;
-  connection.query('SELECT id FROM user',function(err,result){
-    if(err) throw err;
-    if(!result){
+router.post('users/register', function (req, res) {
+  var paramid = req.body.id;
+  var parampassword = req.body.password;
+  connection.query('SELECT id FROM user', function (err, results) {
+    if (err) throw err;
+    if (!result) {
       console.log('이미 있는 아이디');
-      //error
+      res.status(409);
+      return;
     }
-    var userInput= {
-      id : paramid,
-      password : parampassword
+    var userInput = {
+      id: paramid,
+      password: parampassword
     }
-    connection.query('insert into user set ?',userInput,function(err, result){
-      if(err) throw err;
+    connection.query('insert into user set ?', userInput, function (err, results) {
+      if (err) throw err;
       console.log('user insert');
+
+      if (results.length >= 1) {
+        res.status(201);
+      } else {
+        res.status(400);
+      }
     })
   })
 });
 
 module.exports = router;
+<<<<<<< HEAD
 =======
 var express = require('express');
 var router = express.Router();
@@ -119,3 +147,5 @@ router.post('/login', function(req, res, next) {
 
 module.exports = router;
 >>>>>>> 17881a6f2f37b11f68fec39590c713a250d24fc5
+=======
+>>>>>>> 2d36168e8f0b0f08c9bde60808a7d755724f953d
