@@ -5,22 +5,23 @@ var router = express.Router();
 var session= require('express-session');
 var mysqlStore= require('mysql-session-store')(session);
 
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '1234',
-    database: 'bookmark_store'
-});
-connection.connect();
+// var mysql = require('mysql');
+// var connection = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: '1234',
+//     database: 'bookmark_store'
+// });
+// connection.connect();
 
-var options = {
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password:'',
-  database: 'bookmark_store'
-};
+// var options = {
+//   host: 'localhost',
+//   port: 3306,
+//   user: 'root',
+//   password:'',
+//   database: 'bookmark_store'
+// };
+var connection= require('./mysql.js');
 
 app.use(session({
   store: new RedisStore(sessionoptions),

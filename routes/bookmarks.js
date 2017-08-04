@@ -16,14 +16,7 @@ var connection= require('./mysql.js');
 // });
 // connection.connect();
 =======
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'bookmark'
-});
-connection.connect();
+// var connection= require('./mysql.js');
 >>>>>>> 17881a6f2f37b11f68fec39590c713a250d24fc5
 
 
