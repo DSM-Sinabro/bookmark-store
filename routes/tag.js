@@ -20,8 +20,10 @@ router.route('/tag').post((req,res)=>{
             if(err){
                 throw err;
                 console.log(err);
+                res.status(500);
             }
             console.log('insert tag : '+i+'/'+tags.length);
+            res.status(201);
         });
     }
-}).
+})

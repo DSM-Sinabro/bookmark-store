@@ -3,7 +3,6 @@ var express = require('express');
 var router = express.Router();
 
 var session = require('express-session');
-var mysqlStore = require('mysql-session-store')(session);
 
 var connection= require('./mysql.js');
 
@@ -27,10 +26,10 @@ router.post('users/login', function (req, res, next) {
       if (rows.length >= 1) {
         console.log(user.id + ' is logged in.');
         req.session.id = user.id;
-        res.status(200);
+        res.sendStatus(200);
       } else {
         console.log(user.id + 'is failed to login.');
-        res.status(401);
+        res.sendStatus(401);
       }
     });
   }
@@ -42,7 +41,7 @@ router.delete('users/logout', function (req, res) {
     req.session.destroy(function (err) {
       if (err) throw err;
       console.log('logout');
-      res.status(200);
+      res.sendStatus(200);
     });
   }
 });
@@ -54,7 +53,7 @@ router.post('users/register', function (req, res) {
     if (err) throw err;
     if (!result) {
       console.log('이미 있는 아이디');
-      res.status(409);
+      res.sendStatus(409);
       return;
     }
     var userInput = {
@@ -66,9 +65,9 @@ router.post('users/register', function (req, res) {
       console.log('user insert');
 
       if (results.length >= 1) {
-        res.status(201);
+        res.sendStatus(201);
       } else {
-        res.status(400);
+        res.sendStatus(400);
       }
     })
   })
