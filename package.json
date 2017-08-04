@@ -6,13 +6,21 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "body-parser": "~1.17.1",
+    "body-parser": "^1.17.2",
+    "connect-redis": "^3.3.0",
     "cookie-parser": "~1.4.3",
+    "date-utils": "^1.2.21",
     "debug": "~2.6.3",
-    "express": "~4.15.2",
-    "jade": "~1.11.0",
-    "morgan": "~1.8.1",
-    "mysql": "file:node_modules\\mysql",
-    "serve-favicon": "~2.4.2"
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "http": "0.0.0",
+    "join": "^3.0.0",
+    "module": "^1.2.5",
+    "morgan": "^1.8.2",
+    "mssql-session-store": "^1.0.0",
+    "mysql": "^2.13.0",
+    "serve-favicon": "~2.4.2",
+    "static": "^2.0.0"
   }
 }
