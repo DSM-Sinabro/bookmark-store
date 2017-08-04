@@ -42,14 +42,12 @@ router.get('/bookmarks', function (req, res, next) {
 router.route('/bookmarks').post((req, res) => {
   var url = req.body.url;
   var title = req.body.title;
-  var userId = req.session.id;
+  var userId = req.session.userId;
   var nowDate = new Date().toFormat('YYYY-MM-DD HH24:MI:SS')
   var tags = req.body.tags;
-  // var testuserId = "testid01";
   var bookmarkInput = {
     'url': url,
     'title': title,
-    // 'userId': testuserId,
     'userId': userId,
     'rec': 0,
     'date': nowDate
@@ -97,7 +95,7 @@ router.route('/bookmarks').post((req, res) => {
 
 router.delete('/bookmarks/:bookmarkId', function (req, res, next) {
   var bookmarkId = req.params.bookmarkId;
-  var userId = req.session.id;
+  var userId = req.session.userId;
 
   var sql = 'DELETE FROM bookmark WHERE id=? AND userId=?;';
   connection.query(sql, [bookmarkId, userId], function (err, results, fields) {

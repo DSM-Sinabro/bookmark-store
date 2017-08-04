@@ -1,14 +1,14 @@
 const express= require('express');
 
-const route= express.Router();
+const router= express.Router();
 
-const connection= require('./mysql.js');
+const connection= require('../mysql.js');
 
 router.route('/tag').post((req,res)=>{
     console.log('/tag post');
     var writeIdx= req.body.index;
     var tags= req.body.tags;
-    var userid= req.body.userid;
+    var userid= req.body.userId;
 
     for(var i=0;i<tags.length;i++){
         const tagInput={
@@ -27,3 +27,5 @@ router.route('/tag').post((req,res)=>{
         });
     }
 })
+
+module.exports= router;

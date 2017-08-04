@@ -24,12 +24,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 // var data= require('./data/data.js');
 
 
+var session = require('express-session');
+var redis = require('redis');
+
+
+app.use(session({
+  'secret': 'sdfjkfjsdlkasfds',
+  'resave': false,
+  'saveUninitialized': true
+}));
+
 var bookmarks= require('./routes/bookmarks.js');
 var user= require('./routes/users.js');
 var tag= require('./routes/tag.js');
-app.use('', bookmarks);
-app.use('', user);
-app.use('',tag);
+app.use('/', bookmarks);
+app.use('/', user);
+app.use('/', tag);
+
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
 //   var err = new Error('Not Found');
