@@ -4,24 +4,7 @@ var router = express.Router();
 
 require('date-utils');
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-// var mysql = require('mysql');
-// var connection = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: '',
-//     database: 'bookmark'
-// });
-// connection.connect();
-=======
-// var connection= require('./mysql.js');
->>>>>>> 17881a6f2f37b11f68fec39590c713a250d24fc5
-
-=======
 var connection = require('./mysql.js');
->>>>>>> 2d36168e8f0b0f08c9bde60808a7d755724f953d
 
 router.get('/bookmarks', function (req, res, next) {
   var sort = req.query.sort;
@@ -110,8 +93,6 @@ router.route('/bookmarks').post((req, res) => {
       res.status(201);
     }
   });
-}).delete((req, res) => {
-
 })
 
 router.delete('/bookmarks/:bookmarkId', function (req, res, next) {
