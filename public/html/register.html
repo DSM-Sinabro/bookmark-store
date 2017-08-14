@@ -1,35 +1,40 @@
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>register</title>
-    <link rel="stylesheet" href="../css/materialize.min.css">
-    <link rel="stylesheet" href="../css/register.css">
-    <script src="../js/register.js"></script>
-  </head>
-  <body onload="document.f1.user_id.focus();">
-    <div class="container">
-      <div class="title">
-        회원가입
-      </div>
-      <div class="register">
-        <div class="section">
-          <form action="#" method="post" name="f1" onsubmit="return submit_chk(this);">
-            <p>
-              아이디<input type="text" name="user_id" id="user_id" placeholder="아이디를 입력하세요.">
-            </p>
-            <p>
-              비밀번호<input type="password" name="user_pw" id="user_pw" placeholder="비밀번호를 입력하세요.">
-            </p>
-            <p>
-              비밀번호 재확인<input type="password" name="user_pw_confirm" id="user_pw_confirm" placeholder="비밀번호를 재입력하세요.">
-            </p>
-            <p>
-              이메일<input type="text" name="user_mail" id="user_mail" placeholder="이메일을 입력하세요.">
-            </p>
-            <input type="submit" value="회원가입" id="submit" class="btn waves-effect waves-light">
-          </form>
-        </div>
+
+<head>
+  <meta charset="utf-8">
+  <title>register</title>
+  <link rel="stylesheet" href="../css/materialize.min.css">
+  <link rel="stylesheet" href="../css/register.css">
+</head>
+
+<body onload="document.f1.user_id.focus();">
+  <div class="container">
+    <div class="title">
+      회원가입
+    </div>
+    <div class="register">
+      <div class="section">
+        <form action="#" method="post" name="f1" onsubmit="return submit_chk(this);">
+          <p>
+            아이디<input type="text" name="user_id" id="user_id" placeholder="아이디를 입력하세요.">
+          </p>
+          <p>
+            비밀번호<input type="password" name="user_pw" id="user_pw" placeholder="비밀번호를 입력하세요.">
+          </p>
+          <p>
+            비밀번호 재확인<input type="password" name="user_pw_confirm" id="user_pw_confirm" placeholder="비밀번호를 재입력하세요.">
+          </p>
+          <p>
+            이메일<input type="text" name="user_mail" id="user_mail" placeholder="이메일을 입력하세요.">
+          </p>
+          <input type="submit" value="회원가입" id="submit" class="btn waves-effect waves-light">
+        </form>
       </div>
     </div>
-  </body>
+  </div>
+  <script src="../css/materialize.min.js"></script>
+  <script type="text/javascript" src="../js/register.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
+</body>
+
 </html>
