@@ -4,24 +4,7 @@ var router = express.Router();
 
 require('date-utils');
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-// var mysql = require('mysql');
-// var connection = mysql.createConnection({
-//     host: 'localhost',
-//     user: 'root',
-//     password: '',
-//     database: 'bookmark'
-// });
-// connection.connect();
-=======
-// var connection= require('./mysql.js');
->>>>>>> 17881a6f2f37b11f68fec39590c713a250d24fc5
-
-=======
-var connection = require('./mysql.js');
->>>>>>> 2d36168e8f0b0f08c9bde60808a7d755724f953d
+var connection = require('../mysql.js');
 
 router.get('/bookmarks', function (req, res, next) {
   var sort = req.query.sort;
@@ -54,20 +37,17 @@ router.get('/bookmarks', function (req, res, next) {
   }
 
   var regexQuery = '%' + query + '%';
-  conn.query(sql, [regexQuery, regexQuery, regexQuery, regexQuery, LIMIT], getQueryCallback);
+  connection.query(sql, [regexQuery, regexQuery, regexQuery, regexQuery, LIMIT], getQueryCallback);
 });
-
 router.route('/bookmarks').post((req, res) => {
   var url = req.body.url;
   var title = req.body.title;
-  var userId = req.session.id;
+  var userId = req.session.userId;
   var nowDate = new Date().toFormat('YYYY-MM-DD HH24:MI:SS')
   var tags = req.body.tags;
-  // var testuserId = "testid01";
   var bookmarkInput = {
     'url': url,
     'title': title,
-    // 'userId': testuserId,
     'userId': userId,
     'rec': 0,
     'date': nowDate
@@ -76,7 +56,8 @@ router.route('/bookmarks').post((req, res) => {
     if (err) {
       throw err;
       console.log(err);
-      res.status(500);
+      res.sendStatus(500);
+      return;
     }
     console.log('bookmark insert');
     if (tags) {
@@ -85,7 +66,7 @@ router.route('/bookmarks').post((req, res) => {
           throw err;
           console.log(err);
 
-          res.status(500);
+          res.sendStatus(500);
         }
         var uid = Number(result[0]['LAST_INSERT_ID()']);
         //tags insert
@@ -99,33 +80,31 @@ router.route('/bookmarks').post((req, res) => {
             if (err) {
               throw err;
               console.log(err);
-              res.status(500);
+              res.sendStatus(409);
             }
             console.log('tag insert');
-            res.status(201);
+            res.sendStatus(201);
           });
         }
       });
     } else {
-      res.status(201);
+      res.sendStatus(201);
     }
   });
-}).delete((req, res) => {
-
 })
 
 router.delete('/bookmarks/:bookmarkId', function (req, res, next) {
   var bookmarkId = req.params.bookmarkId;
-  var userId = req.session.id;
+  var userId = req.session.userId;
 
   var sql = 'DELETE FROM bookmark WHERE id=? AND userId=?;';
-  conn.query(sql, [bookmarkId, userId], function (err, results, fields) {
+  connection.query(sql, [bookmarkId, userId], function (err, results, fields) {
     if (err) throw err;
 
     if (results.length >= 1) {
-      res.status(200);
+      res.sendStatus(200);
     } else {
-      res.status(400);
+      res.sendStatus(400);
     }
   });
 });
@@ -147,7 +126,7 @@ function getQueryCallback(err, results, fields) {
       resArray.push(resObject);
     });
 
-    res.status(200);
+    res.sendStatus(200);
     res.json(resArray);
   }
 }
