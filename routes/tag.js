@@ -8,13 +8,13 @@ router.route('/tag').post((req,res)=>{
     console.log('/tag post');
     var writeIndex= req.body.index;
     var tags= req.body.tags;
-    var userid= req.body.userId;
+    var userId= req.body.userId;
 
     for(var i=0;i<tags.length;i++){
         const tagInput={
             'bookmarkId':writeIndex,
-            'contant':tags[i],
-            'userid':userid 
+            'content':tags[i],
+            'userId':userId 
         }
         connection.query('select ? from tag',[tags[i]],(err,result)=>{
             if(err){
@@ -42,6 +42,7 @@ router.route('/tag').post((req,res)=>{
             console.log(err);
             res.sendStatus(400);
         }
+        res.sendStatus(200);
     })
 })
 

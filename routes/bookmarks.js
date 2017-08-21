@@ -19,6 +19,8 @@ router.get('/bookmarks', function (req, res, next) {
     sql += ' WHERE b.title LIKE ? OR b.url LIKE ? OR b.writer LIKE ? OR t.tag LIKE ?';
   }
 
+  var regexQuery = '%' + query + '%';
+  
   if (sort) {
     var base;
     if (sort.charAt(0) === '-') {
@@ -36,7 +38,6 @@ router.get('/bookmarks', function (req, res, next) {
     params = [regexQuery, regexQuery, regexQuery, regexQuery, LIMIT];
   }
 
-  var regexQuery = '%' + query + '%';
   connection.query(sql, [regexQuery, regexQuery, regexQuery, regexQuery, LIMIT], getQueryCallback);
 });
 router.route('/bookmarks').post((req, res) => {
