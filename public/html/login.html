@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../css/login.css" type="text/css">
     <link rel="stylesheet" href="../css/materialize.min.css">
+    <link rel="stylesheet" href="../css/login.css" type="text/css">
 </head>
 
 <body>
@@ -17,7 +17,9 @@
                 <form action="#" method="post" class="login_page">
                     <input type="text" placeholder="아이디" autofocus="on"></br>
                     <input type="password" placeholder="비밀번호"></br>
-                    <input class="btn waves-effect waves-light" type="submit" value="로그인" id="login_button">
+                    <div id="btn-login">
+                      <input class="btn waves-effect waves-light" type="submit" value="로그인">                      
+                    </div>
                     <div id="btn_register">
                         <a href="./register.html"><img src="../img/register.png " alt="register"></a>
                         <a href="./register.html">회원가입</a>

@@ -43,6 +43,7 @@ $(document).ready(function() {
       data: data,
       success: function(result){
         // TODO 검색결과 삽입
+        // TODO chips inital 호출하기..
       },
       error: function(xhr, status){
         alert('error occurred!!');

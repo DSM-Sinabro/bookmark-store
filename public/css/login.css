@@ -7,7 +7,7 @@
     border-color: black;
     border-radius: 10px;
     box-shadow: 3px 3px 3px gray;
-    margin-top: 3%; 
+    margin-top: 3%;
     margin-left: 12%;
     margin-right: 12%;
 }
@@ -23,7 +23,7 @@
     margin-bottom: 20%;
 }
 
-#login_button{
+#btn-login{
     float: right;
     text-align: center;
 }
