@@ -9,10 +9,12 @@ var connection = require('../mysql.js');
 router.get('/bookmarks', function (req, res, next) {
   var sort = req.query.sort;
   var query = req.query.query;
-
+  //for recommend table
+  const user= req.session.userId;
+  console.log(user);
   console.log(sort + ", " + query);
-
-  var sql = 'SELECT b.url, b.title, b.writer AS bwriter, t.tag, t.writer AS twriter FROM bookmark b INNER JOIN tag t ON b.id=t.bookmarkId';
+  var sql = 'SELECT b.url, b.title, b.rec, b.writer AS bwriter, t.tag, t.writer AS twriter FROM bookmark b INNER JOIN tag t ON b.id=t.bookmarkId';
+  var sortSql='order by b.date DESC, b.title DESC, b.rec DESC';
   var params;
 
   if (query) {
@@ -21,24 +23,32 @@ router.get('/bookmarks', function (req, res, next) {
 
   var regexQuery = '%' + query + '%';
   
-  if (sort) {
-    var base;
-    if (sort.charAt(0) === '-') {
-      // desc
-      base = sort.substr(1, sort.length);
-      sql += ' ORDER BY ? DESC';
-    } else {
-      // asc
-      base = sort;
-      sql += ' ORDER BY ? ASC';
+  // if (sort) {
+  //   var base;
+  //   if (sort.charAt(0) === '-') {
+  //     // desc
+  //     base = sort.substr(1, sort.length);
+  //     sql += ' ORDER BY ? DESC';
+  //   } else {
+  //     // asc
+  //     base = sort;
+  //     sql += ' ORDER BY ? ASC';
+  //   }
+
+  //   params = [base, regexQuery, regexQuery, regexQuery, regexQuery, LIMIT];
+  // } else {
+  //   params = [regexQuery, regexQuery, regexQuery, regexQuery, LIMIT];
+  // }
+  //이거는 그냥 asc desc잔씀?
+
+  if(sort){
+    if(sort=='title'){
+      sortSql='order by b.title DESC, b.date DESC, b.rec DESC';
+    }else if (sort=='recommanded'){
+      sortSql='order by b.rec DESC, b.date DESC, b.title DESC';
     }
-
-    params = [base, regexQuery, regexQuery, regexQuery, regexQuery, LIMIT];
-  } else {
-    params = [regexQuery, regexQuery, regexQuery, regexQuery, LIMIT];
   }
-
-  connection.query(sql, [regexQuery, regexQuery, regexQuery, regexQuery, LIMIT], getQueryCallback);
+  connection.query(sql+sortSql, params, getQueryCallback);
 });
 router.route('/bookmarks').post((req, res) => {
   var url = req.body.url;
@@ -123,7 +133,7 @@ function getQueryCallback(err, results, fields) {
       resObject.bookmarkWriter = currentValue.bwriter;
       resObject.tag = currentValue.tag;
       resObject.tagWriter = currentValue.twriter;
-
+      if(connection.query('select userid from recommend where bookmarkId = ?',[]))
       resArray.push(resObject);
     });
 

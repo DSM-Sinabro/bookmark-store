@@ -35,9 +35,10 @@ router.route('/tag').post((req,res)=>{
     }
 }).delete((req,res)=>{
     console.log('/tag delete');
-    const uid= req.body.uid;
+    const bookmarkId= req.body.bookmarkId;
+    const tagid=req.body.tagid;
 
-    connection.query('delete from tag where uid=?',[uid],(err,result)=>{
+    connection.query('delete from tag where uid=?',[tagid],(err,result)=>{
         if(err){
             console.log(err);
             res.sendStatus(400);

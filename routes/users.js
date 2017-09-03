@@ -4,7 +4,6 @@ var router = express.Router();
 var connection= require('../mysql.js');
 
 
-
 router.post('/users/login', function (req, res, next) {
   console.log('/login');
   var user = req.body;
@@ -30,9 +29,11 @@ router.post('/users/login', function (req, res, next) {
       }
     });
   }
+}).get((req,res)=>{
+  console.log("get login");
+  res.render('login',{});
 });
 router.delete('users/logout', function (req, res) {
-
   if (req.session.userId) {
     console.log('logout user:' + req.session.userId);
     req.session.destroy(function (err) {
