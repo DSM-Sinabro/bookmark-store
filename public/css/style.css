@@ -5,3 +5,7 @@ height: 100%;
 .nav-content>.row{
   margin-top: 10px;
 }
+
+#bookmarkElement{
+  display: none;
+}
