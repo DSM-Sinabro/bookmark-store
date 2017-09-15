@@ -7,7 +7,7 @@ var connection= require('../mysql.js');
 router.post('/users/login', function (req, res, next) {
   console.log('/login');
   var user = req.body;
-  console.log(sessionKey);
+  // console.log(sessionKey);
   if (req.session.userId) {
     
   } else {

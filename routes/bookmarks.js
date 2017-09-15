@@ -13,13 +13,18 @@ router.get('/bookmarks', function (req, res, next) {
   const user= req.session.userId;
   console.log(user);
   console.log(sort + ", " + query);
+<<<<<<< HEAD
   //b.rec 추가
   var sql = 'SELECT b.url, b.title, b.rec, b.writer AS bwriter, t.tag, t.writer AS twriter FROM bookmark b INNER JOIN tag t ON b.id=t.bookmarkId';
   var sortSql='order by b.date DESC, b.title DESC, b.rec DESC';
+=======
+  var sql = 'SELECT b.url, b.title, b.rec, b.userId AS bUserId, t.content AS tag, t.userId AS tUserId FROM bookmark b INNER JOIN tag t ON b.uid=t.bookmarkId';
+  var sortSql=' order by b.date DESC, b.title DESC, b.rec DESC';
+>>>>>>> b72f24b42c33d53c53c66a99dda8f3f4479ab66e
   var params;
 
   if (query) {
-    sql += ' WHERE b.title LIKE ? OR b.url LIKE ? OR b.writer LIKE ? OR t.tag LIKE ?';
+    sql += ' WHERE b.title LIKE ? OR b.url LIKE ? OR b.userId LIKE ? OR t.tag LIKE ?';
   }
 
   var regexQuery = '%' + query + '%';
@@ -50,22 +55,36 @@ router.get('/bookmarks', function (req, res, next) {
       sortSql='order by b.rec DESC, b.date DESC, b.title DESC';
     }
   }
-  connection.query(sql+sortSql, params, getQueryCallback);
+  connection.query(sql+sortSql, params, function(err, results, fields) {
+    if (err) throw err;
+
+    if (results) {
+      var resArray = new Array();
+
+      results.forEach(function (currentValue, index, arr) {
+        var resObject = new Object();
+        resObject.url = currentValue.url;
+        resObject.title = currentValue.title;
+        resObject.bookmarkUserId = currentValue.bUserId;
+        resObject.tag = currentValue.tag;
+        resObject.tagUserId = currentValue.tUserId;
+        if(connection.query('select userid from recommend where bookmarkId = ?',[]))
+          resArray.push(resObject);
+      });
+
+      res.status(200);
+      res.json(resArray);
+    }
+  });
 });
 router.route('/bookmarks').post((req, res) => {
   var url = req.body.url;
   var title = req.body.title;
-  var userId = req.session.userId;
+  var userId = req.body.userId;
   var nowDate = new Date().toFormat('YYYY-MM-DD HH24:MI:SS')
   var tags = req.body.tags;
-  var bookmarkInput = {
-    'url': url,
-    'title': title,
-    'userId': userId,
-    'rec': 0,
-    'date': nowDate
-  };
-  connection.query('insert into bookmark set ?', bookmarkInput, function (err, results) {
+  var sql = 'INSERT INTO bookmark (url, title, userId) VALUES ("?", "?", "?")';
+  connection.query(sql, [url, title, userId], function (err, results) {
     if (err) {
       throw err;
       console.log(err);
@@ -84,12 +103,12 @@ router.route('/bookmarks').post((req, res) => {
         var uid = Number(result[0]['LAST_INSERT_ID()']);
         //tags insert
         for (var i = 0; i < tags.length; i++) {
-          var tagInput = {
-            'bookmarkId': uid,
-            'content': tags[i],
-            'userId': userId
-          }
-          connection.query('insert into tag set ?', tagInput, function (err, results) {
+          // var tagInput = {
+          //   'bookmarkId': uid,
+          //   'content': tags[i],
+          //   'userId': userId
+          // }
+          connection.query('insert into tag ("?", "?", "?")', [uid, tags[i], userId], function (err, results) {
             if (err) {
               throw err;
               console.log(err);
@@ -110,7 +129,7 @@ router.delete('/bookmarks/:bookmarkId', function (req, res, next) {
   var bookmarkId = req.params.bookmarkId;
   var userId = req.session.userId;
 
-  var sql = 'DELETE FROM bookmark WHERE id=? AND userId=?;';
+  var sql = 'DELETE FROM bookmark WHERE uid=? AND userId=?;';
   connection.query(sql, [bookmarkId, userId], function (err, results, fields) {
     if (err) throw err;
 
@@ -121,27 +140,5 @@ router.delete('/bookmarks/:bookmarkId', function (req, res, next) {
     }
   });
 });
-
-function getQueryCallback(err, results, fields) {
-  if (err) throw err;
-
-  if (results) {
-    var resArray = new Array();
-
-    results.forEach(function (currentValue, index, arr) {
-      var resObject = new Object();
-      resObject.url = currentValue.url;
-      resObject.title = currentValue.title;
-      resObject.bookmarkWriter = currentValue.bwriter;
-      resObject.tag = currentValue.tag;
-      resObject.tagWriter = currentValue.twriter;
-      if(connection.query('select userid from recommend where bookmarkId = ?',[]))
-      resArray.push(resObject);
-    });
-
-    res.sendStatus(200);
-    res.json(resArray);
-  }
-}
 
 module.exports = router;
