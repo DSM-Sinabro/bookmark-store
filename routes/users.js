@@ -33,6 +33,7 @@ router.post('/users/login', function (req, res, next) {
   console.log("get login");
   res.render('login',{});
 });
+
 router.delete('users/logout', function (req, res) {
   if (req.session.userId) {
     console.log('logout user:' + req.session.userId);

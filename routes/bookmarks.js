@@ -13,6 +13,7 @@ router.get('/bookmarks', function (req, res, next) {
   const user= req.session.userId;
   console.log(user);
   console.log(sort + ", " + query);
+  //b.rec 추가
   var sql = 'SELECT b.url, b.title, b.rec, b.writer AS bwriter, t.tag, t.writer AS twriter FROM bookmark b INNER JOIN tag t ON b.id=t.bookmarkId';
   var sortSql='order by b.date DESC, b.title DESC, b.rec DESC';
   var params;
@@ -40,6 +41,7 @@ router.get('/bookmarks', function (req, res, next) {
   //   params = [regexQuery, regexQuery, regexQuery, regexQuery, LIMIT];
   // }
   //이거는 그냥 asc desc잔씀?
+  //그런데 우리꺼 기능에 asc desc를 할 필요가 없고 추천수 정렬이나 제목순 그리고 
 
   if(sort){
     if(sort=='title'){
